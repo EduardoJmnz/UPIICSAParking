@@ -7,7 +7,7 @@
     tools:context=".Home">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/ingresar"
         android:layout_width="174dp"
         android:layout_height="58dp"
         android:layout_alignParentEnd="true"
