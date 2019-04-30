@@ -3,6 +3,8 @@ package com.example.eddyh.upiicsaparking;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -39,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
 
             if(user.equals(usuario)&&password.equals(contra))
             {
-                Intent ven = new Intent(this, Home.class);
-                startActivity(ven);
-                et1.setText("");
-                et2.setText("");
+                FragmentManager manager = getSupportFragmentManager();
+                DialogFragmentGallery galeria = new DialogFragmentGallery();
+                galeria.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.transparente);
+                galeria.show(manager,"");
                 Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
 
             }

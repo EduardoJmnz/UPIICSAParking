@@ -64,12 +64,6 @@ public class DialogFragmentGallery extends DialogFragment {
                 startActivity(intent);
             }
         });
-        imagen.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getDialog().dismiss();
-            }
-        });
         galeria.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
 
     }
