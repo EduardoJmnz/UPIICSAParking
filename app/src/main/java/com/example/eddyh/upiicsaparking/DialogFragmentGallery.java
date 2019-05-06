@@ -65,7 +65,6 @@ public class DialogFragmentGallery extends DialogFragment {
             }
         });
         galeria.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
-
     }
 
 

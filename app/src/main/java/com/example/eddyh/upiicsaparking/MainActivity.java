@@ -41,12 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
             if(user.equals(usuario)&&password.equals(contra))
             {
-                FragmentManager manager = getSupportFragmentManager();
-                DialogFragmentGallery galeria = new DialogFragmentGallery();
-                galeria.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.transparente);
-                galeria.show(manager,"");
-                Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
-
+               Intent intent = new Intent(getApplicationContext(), estacionamiento.class);
+               startActivity(intent);
             }
 
         }else if(user.isEmpty() || password.isEmpty()){

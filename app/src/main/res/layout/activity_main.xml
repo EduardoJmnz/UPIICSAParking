@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/user"
         android:layout_below="@+id/imageView3"
-        android:text="Usuario" />
+        android:text="Usuario"
+        android:layout_alignLeft="@+id/user" />
 
     <EditText
         android:id="@+id/user"
@@ -31,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_alignStart="@+id/textView"
         android:layout_below="@+id/user"
-        android:text="Contraseña" />
+        android:text="Contraseña"
+        android:layout_alignLeft="@+id/textView" />
 
     <EditText
         android:id="@+id/password"
@@ -49,9 +51,10 @@
         android:layout_above="@+id/btnRegistrar"
         android:layout_alignParentStart="true"
         android:background="@color/colorPrimary"
-android:onClick="ingresar"
+        android:onClick="ingresar"
         android:text="Ingresar"
-        android:textColor="@android:color/background_light" />
+        android:textColor="@android:color/background_light"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/btnRegistrar"
@@ -62,7 +65,8 @@ android:onClick="ingresar"
         android:background="@android:color/background_light"
 android:onClick="registrarnuevo"
         android:text="Registrar"
-        android:textColor="@color/colorPrimary" />
+        android:textColor="@color/colorPrimary"
+        android:layout_alignParentLeft="true" />
 
     <ImageView
         android:id="@+id/imageView3"

@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Registro extends AppCompatActivity {
-    EditText et1, et2, et3, et4;
+    EditText  et2, et3, et4;
     Button b1;
 
 
@@ -20,9 +20,8 @@ public class Registro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
 
-        et1 = (EditText)findViewById(R.id.user);
         et2 = (EditText)findViewById(R.id.password);
-        et3 = (EditText)findViewById(R.id.txtId);
+        et3 = (EditText)findViewById(R.id.boleta);
         et4 = (EditText)findViewById(R.id.txtConfirmar);
         b1 = (Button)findViewById(R.id.btnRegistrar);
 
@@ -32,20 +31,18 @@ public class Registro extends AppCompatActivity {
         DBHelper admin = new DBHelper(this, "instituto", null, 1);
         SQLiteDatabase db = admin.getWritableDatabase();
 
-        String usuario = et1.getText().toString();
+        String usuario = et3.getText().toString();
         String password = et2.getText().toString();
-        String codigo = et3.getText().toString();
         String cpassword = et4.getText().toString();
 
 
-        if (usuario.isEmpty() || codigo.isEmpty() || password.isEmpty()) {
+        if (usuario.isEmpty() || password.isEmpty()) {
 
             Toast.makeText(this, "Ingresa Tus Datos", Toast.LENGTH_SHORT).show();
         }
         else if(password.equals(cpassword))
         {
             ContentValues values = new ContentValues();
-            values.put("codigo", codigo);
             values.put("usuario", usuario);
             values.put("password", password);
 
