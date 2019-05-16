@@ -1,10 +1,15 @@
 package com.example.eddyh.upiicsaparking;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,9 +20,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.viewpagerindicator.CirclePageIndicator;
+
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class estacionamiento extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    ViewPager mPager;
+    ImageAdapter adapter;
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +44,7 @@ public class estacionamiento extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -33,7 +52,14 @@ public class estacionamiento extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-    }
+
+        mPager = findViewById(R.id.pager);
+        adapter = new ImageAdapter(getSupportFragmentManager());
+        mPager.setAdapter(adapter);
+        }
+
+
+
 
     @Override
     public void onBackPressed() {
@@ -71,11 +97,8 @@ public class estacionamiento extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
         int id = item.getItemId();
-
         if (id == R.id.inicio) {
-
         } else if (id == R.id.showQR) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new QRShower()).commit();
         }  else if (id == R.id.ajustes) {
@@ -83,11 +106,13 @@ public class estacionamiento extends AppCompatActivity
         } else if (id == R.id.compartir) {
 
         } else if (id == R.id.info) {
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+
 }
