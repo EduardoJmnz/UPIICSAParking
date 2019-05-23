@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class Imageslider extends Fragment {
 
     ImageView imagen;
     TextView titulos;
-
+    FragmentManager fragmentManager;
     public Imageslider() {
         // Required empty public constructor
     }
@@ -33,6 +34,10 @@ public class Imageslider extends Fragment {
         imagen = view.findViewById(R.id.Image);
         Picasso.with(getContext()).load(getArguments().getInt("source")).into(imagen);
         return  view;
+    }
+
+    public void mostrarQR(View view){
+        fragmentManager.beginTransaction().replace(R.id.contenedor, new QRShower()).commit();
     }
 
 }

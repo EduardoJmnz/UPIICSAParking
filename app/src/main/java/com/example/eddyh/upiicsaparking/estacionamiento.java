@@ -33,6 +33,8 @@ import java.util.TimerTask;
 
 public class estacionamiento extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
     ViewPager mPager;
     ImageAdapter adapter;
     private FragmentManager fragmentManager = getSupportFragmentManager();
@@ -44,7 +46,6 @@ public class estacionamiento extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -52,11 +53,10 @@ public class estacionamiento extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
         mPager = findViewById(R.id.pager);
         adapter = new ImageAdapter(getSupportFragmentManager());
         mPager.setAdapter(adapter);
-        }
+    }
 
 
 

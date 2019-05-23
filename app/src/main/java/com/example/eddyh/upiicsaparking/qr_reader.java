@@ -75,6 +75,5 @@ public class qr_reader extends AppCompatActivity implements ZXingScannerView.Res
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         escanerView.resumeCameraPreview(this);//CIERRA LA VENTANA Y VUELVE  ALA ANTERIOR
-
     }
 }

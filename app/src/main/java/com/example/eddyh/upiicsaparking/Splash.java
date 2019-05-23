@@ -1,6 +1,7 @@
 package com.example.eddyh.upiicsaparking;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -17,6 +18,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -24,47 +27,23 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class Splash extends AppCompatActivity {
 
 
-    private  final int REQUEST_CODE_ASK_PERMISSION = 100;
-    private int avanzar = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        solicitarPermisos();
+        prepareComponents();
+    }
+
+    private void prepareComponents() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(avanzar == 1){
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(intent);
-                }else{
-                    finish();
-                }
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
-        },4000);
+        }, 3000);
     }
-
-    private void solicitarPermisos(){
-        int permisosCamera = ActivityCompat.checkSelfPermission(this, CAMERA);
-        int permisosStorage = ActivityCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE);
-        if(permisosCamera!= PackageManager.PERMISSION_GRANTED || permisosStorage != PackageManager.PERMISSION_GRANTED){
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE, CAMERA}, REQUEST_CODE_ASK_PERMISSION);
-                avanzar = 1;
-            }
-
-        }else{
-
-        }
-
-    }
-
-
-
-
-
-
-
 
 }

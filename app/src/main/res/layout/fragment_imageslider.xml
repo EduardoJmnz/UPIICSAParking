@@ -7,76 +7,57 @@
     tools:context=".Imageslider">
 
 
-
     <android.support.constraint.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:background="#ffffff"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff">
 
-        <TextView
-            android:id="@+id/titulos"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="132dp"
-            android:layout_marginEnd="13dp"
-            android:layout_marginRight="13dp"
-            android:layout_marginBottom="8dp"
-            android:background="#ffffff"
-            android:text="@string/titulo_Estacionamiento1"
-            android:textAlignment="center"
-            android:textSize="25dp"
+            android:layout_height="568dp"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.824" />
+            app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="416dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:textSize="20dp"
-            android:layout_marginBottom="560dp"
-            android:text="@string/capacidad_inge"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/Image"
-            android:layout_width="407dp"
-            android:layout_height="420dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginBottom="140dp"
-            android:background="#ffffff"
-            android:src="@drawable/estacionamiento1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.666"
-            app:layout_constraintStart_toStartOf="parent" />
+            <TextView
+                android:id="@+id/titulos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:text="@string/titulo_Estacionamiento1"
+                android:textAlignment="center"
+                android:textSize="25dp" />
 
-        <Button
-            android:layout_width="422dp"
-            android:layout_height="71dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:textSize="20dp"
-            android:textColor="#ffffff"
-            android:background="@color/colorPrimary"
-            android:text="Mostar QR"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <ImageView
+                android:id="@+id/Image"
+                android:layout_width="match_parent"
+                android:layout_height="420dp"
+                android:layout_gravity="center"
+                android:background="#ffffff"
+                android:src="@drawable/estacionamiento1" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/capacidad_inge"
+                android:textSize="25dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/cupo_inge"
+                android:textSize="25dp" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:onClick="mostrarQR"
+                android:text="Mostar QR"
+                android:textColor="#ffffff"
+                android:textSize="20dp" />
+
+        </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </FrameLayout>

@@ -63,7 +63,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:background="@android:color/background_light"
-android:onClick="registrarnuevo"
+        android:onClick="registrarnuevo"
         android:text="Registrar"
         android:textColor="@color/colorPrimary"
         android:layout_alignParentLeft="true" />

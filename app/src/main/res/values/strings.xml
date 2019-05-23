@@ -6,6 +6,8 @@
     <string name="titulo_Estacionamiento1">Estacionamiento de Ingenierías</string>
     <string name="capacidad_inge">Capacidad total: 130 lugares</string>
     <string name="capacidad_pe">Capacidad total: 80 lugares</string>
+    <string name="cupo_inge">Lugares disponibles:</string>
+    <string name="cupo_pe">Lugares disponibles:</string>
     <string name="titulo_Estacionamiento2">Estacionamiento de Pesados</string>
     <string name="title_activity_estacionamiento">Estacionamiento</string>
     <string name="titulo_qr">Mostrar QR</string>
