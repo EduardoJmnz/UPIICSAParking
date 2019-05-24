@@ -45,7 +45,20 @@
             android:layout_width="267dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:inputType="number"
+            android:maxLength="10" />
+        <TextView
+            android:layout_width="267dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:text="No. Folio" />
+        <EditText
+            android:id="@+id/folio"
+            android:hint="Escribe tu numero de folio"
+            android:layout_width="267dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
             android:maxLength="10" />
 
         <TextView

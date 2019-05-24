@@ -11,9 +11,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.squareup.picasso.Downloader;
+
 public class MainActivity extends AppCompatActivity {
-    EditText et1, et2;
-    private Cursor fila;
+    private EditText et1, et2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,31 +27,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ingresar(View v){
-        DBHelper admin=new DBHelper(this, "instituto",null, 1);
-        SQLiteDatabase db=admin.getWritableDatabase();
-
-        String user=et1.getText().toString();
-        String password=et2.getText().toString();
-        fila=db.rawQuery("select usuario, password from usuarios where usuario='"+user+"' and password= '"+password+"'", null);
-
-        //mientras fila tiene algun valor
-
-        if(fila.moveToFirst())
-        {
-            String usuario=fila.getString(0);
-            String contra=fila.getString(1);
-
-            if(user.equals(usuario)&&password.equals(contra))
-            {
-               Intent intent = new Intent(getApplicationContext(), estacionamiento.class);
-               startActivity(intent);
-            }
-
-        }else if(user.isEmpty() || password.isEmpty()){
-            Toast.makeText(getApplicationContext(), "Ingresa Tus Datos", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(getApplicationContext(), "Usuario/Contraseña Incorrecto", Toast.LENGTH_SHORT).show();
-        }
 
     }
 
