@@ -59,7 +59,7 @@
             android:layout_width="267dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:maxLength="10" />
+            android:maxLength="6" />
 
         <TextView
             android:layout_width="267dp"

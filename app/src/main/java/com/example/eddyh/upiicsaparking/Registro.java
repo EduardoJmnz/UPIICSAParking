@@ -29,7 +29,7 @@ import java.util.Map;
 
 public class Registro extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
     private EditText  et1, et2, et3, et4;
-    private static String URL_REGIST = "";
+    private  Intent intent;
     RequestQueue requestQueue;
     JsonRequest jsonRequest;
     @Override
@@ -37,11 +37,7 @@ public class Registro extends AppCompatActivity implements Response.Listener<JSO
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         preparedComponents();
-
         requestQueue = Volley.newRequestQueue(this);
-
-
-
     }
     public void preparedComponents(){
         et1 = (EditText)findViewById(R.id.folio);
@@ -55,12 +51,25 @@ public class Registro extends AppCompatActivity implements Response.Listener<JSO
         String boleta = et3.getText().toString().trim();
         String folio = et1.getText().toString().trim();
         String contraseña = et2.getText().toString().trim();
-        iniciarSesion();
+        String contra2 = et4.getText().toString().trim();
+
+        if(boleta != "" || folio != "" || contraseña != ""|| contra2 != "")
+            if(contraseña == contra2){
+                intent = new Intent(this, MainActivity.class);
+                intent.putExtra("contraseña", contraseña);
+                intent.putExtra("usuario", boleta);
+                iniciarSesion(boleta, folio);
+            }else{
+                Toast.makeText(this, "La contraseña no es la misma, escribela de nuevo", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Llena los campos vacíos", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
-    private void iniciarSesion() {
-        URL_REGIST = "";
-        jsonRequest = new JsonObjectRequest(Request.Method.GET, URL_REGIST, null, this, this);
+    private void iniciarSesion(String boleta, String folio) {
+        String url = "https://upiiparking.000webhostapp.com/conexionBD.php?boleta="+boleta+"&folio="+folio;
+        jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
         requestQueue.add(jsonRequest);
     }
 
@@ -71,21 +80,23 @@ public class Registro extends AppCompatActivity implements Response.Listener<JSO
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(getBaseContext(), "No eres beneficiario , lo lamentamos."+error.toString(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "No eres beneficiario , lo lamentamos.\n"+error.toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResponse(JSONObject response) {
         Users data = new Users();
-        Toast.makeText(getBaseContext(), "Felicidades, ahora inicia sesión", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Felicidades, ahora inicia sesión", Toast.LENGTH_SHORT).show();
+        int validado = 1;
         JSONArray jsonArray = response.optJSONArray("datos");
-        JSONObject jsonObject = null;
+        JSONObject jsonObject1 = null;
         try {
-            jsonObject = jsonArray.getJSONObject(0);
-            data.setBoleta(jsonObject.optString("boleta"));
-            data.setFolio(jsonObject.optString("folio"));
+            jsonObject1 = jsonArray.getJSONObject(0);
+            data.setBoleta(jsonObject1.optString("boleta"));
+            data.setFolio(jsonObject1.optString("folio"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        startActivity(intent);
     }
 }

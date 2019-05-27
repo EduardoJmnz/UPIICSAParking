@@ -16,24 +16,45 @@ import com.squareup.picasso.Downloader;
 public class MainActivity extends AppCompatActivity {
     private EditText et1, et2;
 
-
+    private Intent intent;
+    boolean validado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        recibirDatos();
         et1 = (EditText)findViewById(R.id.user);
         et2 = (EditText)findViewById(R.id.password);
     }
 
-    public void ingresar(View v){
+    private void recibirDatos(){
+        Bundle extra = getIntent().getExtras();
+        String contra = extra.getString("contraseña");
+        String boleta = extra.getString("usuario");
 
+        String user = et1.getText().toString().trim();
+        String cont = et2.getText().toString().trim();
+
+        if(user == boleta && cont == contra){
+            validado = true;
+        }else{
+            validado = false;
+        }
+    }
+
+    public void ingresar(View v){
+        if(validado){
+            Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
+            intent = new Intent(this, estacionamiento.class);
+            startActivity(intent);
+        }else{
+            Toast.makeText(this, "Usuario y/o Contraseña incorrectos", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void registrarnuevo(View view){
         Intent ven = new Intent(this, Registro.class);
         startActivity(ven);
-
     }
 
 

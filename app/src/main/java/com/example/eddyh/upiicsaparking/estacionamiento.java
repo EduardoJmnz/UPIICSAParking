@@ -114,5 +114,7 @@ public class estacionamiento extends AppCompatActivity
     }
 
 
-
+    public void mostrarQR(View view) {
+        fragmentManager.beginTransaction().replace(R.id.contenedor, new QRShower()).commit();
+    }
 }
