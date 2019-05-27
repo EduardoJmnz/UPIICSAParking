@@ -22,12 +22,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+<<<<<<< Updated upstream
+=======
+        //recibirDatos();
+>>>>>>> Stashed changes
         et1 = (EditText)findViewById(R.id.user);
         et2 = (EditText)findViewById(R.id.password);
         //recibirDatos();
     }
 
-    private void recibirDatos(){
+    /*private void recibirDatos(){
         Bundle extra = getIntent().getExtras();
         String contra = extra.getString("contraseña");
         String boleta = extra.getString("usuario");
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             validado = false;
         }
-    }
+    }*/
 
     public void ingresar(View v){
         if(validado){
