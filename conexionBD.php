@@ -1,8 +1,8 @@
 <?php
-$hostname = '185.201.11.189';
-$database = 'u700687137_upark';
-$username = 'u700687137_park';
-$table = 'ganadores';
+$hostname = 'localhost';
+$database = 'id9728474_upiiparking';
+$username = 'id9728474_emmanuel';
+$password = 'ironman741';
 
 $json = array();
 if(isset($_GET["boleta"]) && isset($_GET["folio"])){
@@ -10,7 +10,7 @@ if(isset($_GET["boleta"]) && isset($_GET["folio"])){
     $folio = $_GET['folio'];
     $conexion = mysqli_connect($hostname, $username, $password, $database);
     $consulta = "SELECT boleta, folio FROM ganadores WHERE boleta= '{$boleta}' AND folio = '{$folio}'";
-    $resultado = mysqli_query($conexion, $consulta)
+    $resultado = mysqli_query($conexion, $consulta);
     
     if($consulta){
         if($reg = mysqli_fetch_array($resultado)){
@@ -34,4 +34,5 @@ if(isset($_GET["boleta"]) && isset($_GET["folio"])){
     $json['datos'][]=$results;
     echo json_encode($json);
 }
+
 ?>

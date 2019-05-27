@@ -25,78 +25,112 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
-public class Registro extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
-    private EditText  et1, et2, et3, et4;
-    private  Intent intent;
+public class Registro extends AppCompatActivity {
+    private EditText et1, et2, et3, et4;
     RequestQueue requestQueue;
     JsonRequest jsonRequest;
+    String boleta="";
+    String folio="";
+    String contraseña="";
+    String contra2="";
+    String URL = "https://upiiparking.000webhostapp.com/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
         preparedComponents();
-        requestQueue = Volley.newRequestQueue(this);
     }
-    public void preparedComponents(){
-        et1 = (EditText)findViewById(R.id.folio);
-        et2 = (EditText)findViewById(R.id.password);
-        et3 = (EditText)findViewById(R.id.boleta);
-        et4 = (EditText)findViewById(R.id.txtConfirmar);
+
+    public void preparedComponents() {
+        et1 = (EditText) findViewById(R.id.folio);
+        et2 = (EditText) findViewById(R.id.password);
+        et3 = (EditText) findViewById(R.id.boleta);
+        et4 = (EditText) findViewById(R.id.txtConfirmar);
+
+        boleta = et3.getText().toString().trim();
+        folio = et1.getText().toString().trim();
+        contraseña = et2.getText().toString().trim();
+        contra2 = et4.getText().toString().trim();
 
     }
 
     public void registrar(View v) {
-        String boleta = et3.getText().toString().trim();
-        String folio = et1.getText().toString().trim();
-        String contraseña = et2.getText().toString().trim();
-        String contra2 = et4.getText().toString().trim();
 
-        if(boleta != "" || folio != "" || contraseña != ""|| contra2 != "")
-            if(contraseña == contra2){
-                intent = new Intent(this, MainActivity.class);
-                intent.putExtra("contraseña", contraseña);
-                intent.putExtra("usuario", boleta);
-                iniciarSesion(boleta, folio);
-            }else{
-                Toast.makeText(this, "La contraseña no es la misma, escribela de nuevo", Toast.LENGTH_SHORT).show();
+        if (!boleta.equals("") || !folio.equals("") || !contraseña.equals("")) {
+            if (contraseña.equals(contra2)) {
+                buscarDatos(URL, boleta, folio);
+            } else {
+                Toast.makeText(this, "La contraseña no es la misma, verificalo", Toast.LENGTH_SHORT).show();
+            }
         }else{
             Toast.makeText(this, "Llena los campos vacíos", Toast.LENGTH_SHORT).show();
         }
-
     }
 
-    private void iniciarSesion(String boleta, String folio) {
-        String url = "https://upiiparking.000webhostapp.com/conexionBD.php?boleta="+boleta+"&folio="+folio;
-        jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null, this, this);
-        requestQueue.add(jsonRequest);
+    private void buscarDatos(final String URL, final String boleta, final String folio){
+        String sum = "conexionBD.php?boleta="+boleta+"&folio="+folio;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL+ sum, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                insertarDatos(URL);
+                Toast.makeText(getApplicationContext(), "Felicidades, ahora inicia sesión", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Lo lamentamos pero no eres beneficiario.\n\n No puedes registrarte" + error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("boleta", boleta);
+                params.put("folio", folio);
+                return params;
+            }
+        };
+
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
-    public void cancelar(View view){
+    private void insertarDatos(String URL){
+        String sum = "insertarDatosBD.php?boleta="+boleta+"&folio="+folio+"&contraseña="+contraseña;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL + sum, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "INSERTAR DATOS:\n\n"+error.toString(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("boleta", boleta);
+                params.put("folio", folio);
+                params.put("contraseña", contraseña);
+                return params;
+            }
+        };
+        requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+        }
+
+    public void cancelar (View view){
         finish();
     }
 
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        Toast.makeText(this, "No eres beneficiario , lo lamentamos.\n"+error.toString(), Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-        Users data = new Users();
-        Toast.makeText(this, "Felicidades, ahora inicia sesión", Toast.LENGTH_SHORT).show();
-        int validado = 1;
-        JSONArray jsonArray = response.optJSONArray("datos");
-        JSONObject jsonObject1 = null;
-        try {
-            jsonObject1 = jsonArray.getJSONObject(0);
-            data.setBoleta(jsonObject1.optString("boleta"));
-            data.setFolio(jsonObject1.optString("folio"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        startActivity(intent);
-    }
 }
+

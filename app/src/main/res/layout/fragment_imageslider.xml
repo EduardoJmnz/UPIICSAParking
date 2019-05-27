@@ -21,15 +21,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-
             <TextView
-                android:id="@+id/titulos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
-                android:text="@string/titulo_Estacionamiento1"
-                android:textAlignment="center"
+                android:text="@string/cupo_inge"
                 android:textSize="25dp" />
 
             <ImageView
@@ -47,11 +42,7 @@
                 android:textAlignment="center"
                 android:textSize="25dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/cupo_inge"
-                android:textSize="25dp" />
+
 
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>

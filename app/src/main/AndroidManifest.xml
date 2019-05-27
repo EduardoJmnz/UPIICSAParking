@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.eddyh.upiicsaparking">
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
@@ -18,16 +18,16 @@
 
         </activity>
         <activity android:name=".Splash">
-
-        </activity>
-        <activity android:name=".qr_reader" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".Registro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".qr_reader" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".Registro">
+
         </activity>
     </application>
 

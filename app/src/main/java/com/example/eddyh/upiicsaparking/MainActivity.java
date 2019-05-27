@@ -22,9 +22,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recibirDatos();
         et1 = (EditText)findViewById(R.id.user);
         et2 = (EditText)findViewById(R.id.password);
+        //recibirDatos();
     }
 
     private void recibirDatos(){
