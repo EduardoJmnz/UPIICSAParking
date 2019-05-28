@@ -10,6 +10,19 @@
     tools:showIn="@layout/app_bar_estacionamiento">
 
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="418dp"
+        android:layout_height="521dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.202">
+
+    </android.support.v4.view.ViewPager>
 
     <Button
         android:layout_width="348dp"

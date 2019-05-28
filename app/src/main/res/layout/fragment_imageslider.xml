@@ -7,31 +7,18 @@
     tools:context=".Imageslider">
 
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff">
+    <LinearLayout
+        android:layout_width="418dp"
+        android:layout_height="539dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="418dp"
-            android:layout_height="527dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <ImageView
-                android:id="@+id/Image"
-                android:layout_width="match_parent"
-                android:layout_height="420dp"
-                android:layout_gravity="center"
-                android:background="#ffffff"
-                android:src="@drawable/estacionamiento1" />
-
-
-        </LinearLayout>
-    </android.support.constraint.ConstraintLayout>
+        <ImageView
+            android:id="@+id/Image"
+            android:layout_width="match_parent"
+            android:layout_height="420dp"
+            android:layout_gravity="center"
+            android:background="@drawable/estacionamiento1" />
+    </LinearLayout>
 </FrameLayout>

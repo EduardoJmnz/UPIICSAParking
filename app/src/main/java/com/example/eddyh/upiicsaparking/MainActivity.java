@@ -1,6 +1,8 @@
 package com.example.eddyh.upiicsaparking;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.DialogFragment;
@@ -26,10 +28,9 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private EditText et1, et2;
-    String URL = "https://upiiparking.000webhostapp.com/";
+    private Context context;
     private Intent intent;
-    RequestQueue requestQueue;
-    String boleta, contraseña;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,28 +42,24 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void ingresar(View v){
-        String sum = "conexionBD.php?boleta="+boleta+"&contraseña="+contraseña;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL+ sum, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(), "Bienvenido(a)", Toast.LENGTH_SHORT).show();
+       leerPreferences();
+    }
+
+
+    private void leerPreferences(){
+
+
+            SharedPreferences sharedPreferences  = getSharedPreferences("Login",context.MODE_PRIVATE);
+            String user = sharedPreferences.getString("boleta", "N/A");
+            String pass = sharedPreferences.getString("password", "N/a");
+
+            if(user.equals(et1.getText().toString()) && pass.equals(et2.getText().toString())){
+                Intent intent = new Intent(getApplicationContext(), estacionamiento.class);
+                Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }else{
+                Toast.makeText(getApplicationContext(), "Usuario y/o Contraseña incorrectos", Toast.LENGTH_SHORT).show();
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Usuario y/o Contraseña no reconocidos \n\n Registrate para validarte el acceso"+error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("boleta", boleta);
-                params.put("contraseña", contraseña);
-                return params;
-            }
-        };
-        requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
     }
 
     public void registrarnuevo(View view){

@@ -1,6 +1,8 @@
 package com.example.eddyh.upiicsaparking;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +30,7 @@ public class Registro extends AppCompatActivity {
     String boleta;
     String folio;
     String contra;
+    private int validar;
     String contra2;
     String URL = "https://upiiparking.000webhostapp.com/";
 
@@ -61,7 +64,7 @@ public class Registro extends AppCompatActivity {
                             if(et4.getText().toString().isEmpty()){
                                 Toast.makeText(getApplicationContext(), "Confirma la contraseña", Toast.LENGTH_SHORT).show();
                             }else {
-                                if((et2.getText().toString()).equals(et4.getText().toString())){
+                                if((contra = et2.getText().toString()).equals(et4.getText().toString())){
                                     buscarDatos(URL, boleta = et3.getText().toString(), folio = et1.getText().toString());
                                 }else{
                                     Toast.makeText(getApplicationContext(), "Las contraseñas no son iguales", Toast.LENGTH_SHORT).show();
@@ -80,14 +83,17 @@ public class Registro extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL+ sum, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                validar = 1;
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                insertarDatos(URL, boleta, folio, contra = et2.getText().toString());
+                guardarPreferences(boleta, contra);
                 startActivity(intent);
                 Toast.makeText(getApplicationContext(), "Felicidades eres beneficiario, ahora inicia sesión", Toast.LENGTH_SHORT).show();
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                validar = 2;
                 Toast.makeText(getApplicationContext(), "Lo lamentamos pero no eres beneficiario.\n\n" + error.toString(), Toast.LENGTH_SHORT).show();
             }
         }){
@@ -105,30 +111,22 @@ public class Registro extends AppCompatActivity {
 
     }
 
-    private void insertarDatos(String URL, final String boleta, final String folio, final String contra){
-        String sum = "insertarDatosBD.php?boleta="+boleta+"&folio="+folio+"&contraseña="+contra;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL + sum, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "INSERTAR DATOS:\n\n"+error.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("boleta", boleta);
-                params.put("folio", folio);
-                params.put("contraseña", contra);
-                return params;
-            }
-        };
-        requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+    private void guardarPreferences(String boleta, String contra) {
+        if(validar == 1){
+            Context context = getApplicationContext();
+            SharedPreferences sharedPreferences = getSharedPreferences("Login", context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("boleta", boleta);
+            editor.putString("password", contra);
+            editor.commit();
+        }else if(validar == 2){
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
+            Toast.makeText(getApplicationContext(), "No puede hacer uso de la aplicación \n\n Lo sentimos mucho :(", Toast.LENGTH_SHORT).show();
+            finish();
         }
+
+    }
 
     public void cancelar (View view){
         finish();

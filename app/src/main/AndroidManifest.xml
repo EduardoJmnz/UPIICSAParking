@@ -16,11 +16,7 @@
             android:name=".estacionamiento"
             android:label="@string/title_activity_estacionamiento"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".Splash">
 
@@ -28,7 +24,11 @@
         <activity android:name=".qr_reader" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Registro">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
 

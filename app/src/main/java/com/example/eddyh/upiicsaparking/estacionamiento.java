@@ -36,7 +36,8 @@ public class estacionamiento extends AppCompatActivity
 
 Button button;
     private FragmentManager fragmentManager = getSupportFragmentManager();
-
+    ViewPager mPager;
+    ImageAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,6 @@ Button button;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        fragmentManager.beginTransaction().replace(R.id.contenedor, new Imagenes()).commit();
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -53,7 +53,9 @@ Button button;
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-
+        mPager = findViewById(R.id.pager);
+        adapter = new ImageAdapter(getSupportFragmentManager());
+        mPager.setAdapter(adapter);
 
     }
 
@@ -98,7 +100,11 @@ Button button;
 
         int id = item.getItemId();
         if (id == R.id.inicio) {
-            fragmentManager.beginTransaction().replace(R.id.contenedor, new Imagenes()).commit();
+            mPager = findViewById(R.id.pager);
+            adapter = new ImageAdapter(getSupportFragmentManager());
+            mPager.setAdapter(adapter);
+
+
             button.setVisibility(View.VISIBLE);
         } else if (id == R.id.showQR) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new QRShower()).commit();

@@ -30,6 +30,7 @@ public class Imageslider extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_imageslider, container, false);
         imagen = view.findViewById(R.id.Image);
+        assert getArguments() != null;
         Picasso.with(getContext()).load(getArguments().getInt("source")).into(imagen);
         return  view;
     }
