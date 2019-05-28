@@ -34,9 +34,7 @@ import java.util.TimerTask;
 public class estacionamiento extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
-    ViewPager mPager;
-    ImageAdapter adapter;
+Button button;
     private FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
@@ -46,6 +44,8 @@ public class estacionamiento extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        fragmentManager.beginTransaction().replace(R.id.contenedor, new Imagenes()).commit();
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -53,9 +53,8 @@ public class estacionamiento extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
-        mPager = findViewById(R.id.pager);
-        adapter = new ImageAdapter(getSupportFragmentManager());
-        mPager.setAdapter(adapter);
+
+
     }
 
 
@@ -99,6 +98,8 @@ public class estacionamiento extends AppCompatActivity
 
         int id = item.getItemId();
         if (id == R.id.inicio) {
+            fragmentManager.beginTransaction().replace(R.id.contenedor, new Imagenes()).commit();
+            button.setVisibility(View.VISIBLE);
         } else if (id == R.id.showQR) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new QRShower()).commit();
         }  else if (id == R.id.ajustes) {
@@ -116,5 +117,7 @@ public class estacionamiento extends AppCompatActivity
 
     public void mostrarQR(View view) {
         fragmentManager.beginTransaction().replace(R.id.contenedor, new QRShower()).commit();
+        button = (Button)view.findViewById(R.id.QR);
+        button.setVisibility(View.GONE);
     }
 }

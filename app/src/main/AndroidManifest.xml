@@ -16,31 +16,21 @@
             android:name=".estacionamiento"
             android:label="@string/title_activity_estacionamiento"
             android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity android:name=".Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-<<<<<<< Updated upstream
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Splash">
+
+        </activity>
         <activity android:name=".qr_reader" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Registro">
-=======
->>>>>>> Stashed changes
 
         </activity>
 
-        <activity android:name=".qr_reader" />
-        <activity android:name=".MainActivity"/>
-
-
-
-
-        <activity android:name=".Registro"/>
 
 
 

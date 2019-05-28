@@ -19,8 +19,6 @@ import com.squareup.picasso.Target;
 public class Imageslider extends Fragment {
 
     ImageView imagen;
-    TextView titulos;
-    FragmentManager fragmentManager;
     public Imageslider() {
         // Required empty public constructor
     }
@@ -34,10 +32,6 @@ public class Imageslider extends Fragment {
         imagen = view.findViewById(R.id.Image);
         Picasso.with(getContext()).load(getArguments().getInt("source")).into(imagen);
         return  view;
-    }
-
-    public void mostrarQR(View view){
-        fragmentManager.beginTransaction().replace(R.id.contenedor, new QRShower()).commit();
     }
 
 }
