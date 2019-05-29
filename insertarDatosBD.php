@@ -1,17 +1,11 @@
 ﻿<?php
-$hostname = 'localhost';
-$database = 'id9728474_upiiparking';
-$username = 'id9728474_emmanuel';
-$password = 'ironman741';
+include 'connect.php';
+$boleta = $_POST['boleta'];
+$folio = $_POST['folio'];
+$validador = $_POST['validador'];
 
-$json = array();
-if(isset($_REQUEST["boleta"]) && isset($_REQUEST["folio"]) && isset[$_REQUEST["contraseña"]){
-    $boleta =$_REQUEST['boleta'];
-    $folio = $_REQUEST['folio'];
-    $contraseña = $_REQUEST['contraseña'];
-    
-    $conexion = mysqli_connect($hostname, $username, $password, $database);
-$consulta = "INSERT INTO ganadores (contraseña) VALUES ('{$contraseña}')WHERE boleta = '{boleta}'folio FROM ganadores WHERE boleta= '{$boleta}' AND folio = '{$folio}'";
+$consulta = "INSERT INTO ganadores (Dentro_Fuera) VALUES ('.$validador.')FROM ganadores WHERE boleta= '.$boleta.' AND folio = '.$folio.'";
     $resultado = mysqli_query($conexion, $consulta) or die (mysqli_error());
-   
+mysqli_query($conexion,$consulta) or die (mysqli_error());
+mysqli_close($conexion);
 ?>

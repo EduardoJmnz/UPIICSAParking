@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText et1, et2;
     private Context context;
     private Intent intent;
+    String boletatxt, contraseña;
+
+    public  static final String boleta ="boleta";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +45,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void ingresar(View v){
+
        leerPreferences();
     }
 
 
     private void leerPreferences(){
-
-
             SharedPreferences sharedPreferences  = getSharedPreferences("Login",context.MODE_PRIVATE);
             String user = sharedPreferences.getString("boleta", "N/A");
             String pass = sharedPreferences.getString("password", "N/a");
-
             if(user.equals(et1.getText().toString()) && pass.equals(et2.getText().toString())){
                 Intent intent = new Intent(getApplicationContext(), estacionamiento.class);
                 Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_SHORT).show();

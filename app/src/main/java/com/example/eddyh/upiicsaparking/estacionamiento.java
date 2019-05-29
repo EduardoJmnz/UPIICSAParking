@@ -1,6 +1,8 @@
 package com.example.eddyh.upiicsaparking;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +25,7 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -32,12 +35,13 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class estacionamiento extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
 Button button;
     private FragmentManager fragmentManager = getSupportFragmentManager();
     ViewPager mPager;
     ImageAdapter adapter;
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,8 +107,6 @@ Button button;
             mPager = findViewById(R.id.pager);
             adapter = new ImageAdapter(getSupportFragmentManager());
             mPager.setAdapter(adapter);
-
-
             button.setVisibility(View.VISIBLE);
         } else if (id == R.id.showQR) {
             fragmentManager.beginTransaction().replace(R.id.contenedor, new QRShower()).commit();
@@ -125,5 +127,13 @@ Button button;
         fragmentManager.beginTransaction().replace(R.id.contenedor, new QRShower()).commit();
         button = (Button)view.findViewById(R.id.QR);
         button.setVisibility(View.GONE);
+    }
+
+
+
+
+    private void iniciarSesion() {
+
+
     }
 }
