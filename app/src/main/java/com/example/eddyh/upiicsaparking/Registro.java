@@ -45,7 +45,7 @@ public class Registro extends AppCompatActivity implements Response.Listener<JSO
     String contra;
     private int validar;
     String contra2;
-    String URL = "https://upiiparking.000webhostapp.com/";
+    String URL = "https://upiicsapark.xyz/";
 
 
     @Override
@@ -102,9 +102,6 @@ public class Registro extends AppCompatActivity implements Response.Listener<JSO
     }
 
 
-
-
-
     public void guardarPreferences(String boleta, String contra, String folio) {
         if(validar == 1){
             Context context = getApplicationContext();
@@ -131,17 +128,16 @@ public class Registro extends AppCompatActivity implements Response.Listener<JSO
     public void onErrorResponse(VolleyError error) {
         validar = 2;
         Toast.makeText(this, "No eres beneficiario, lo lamentamos\nNo puedes usar la app", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
-
-
-
 
     @Override
     public void onResponse(JSONObject response) {
         Users user = new Users();
         validar = 1;
         guardarPreferences(boleta, contra, folio);
-        Toast.makeText(getApplicationContext(), "Felicidades, ahora inicia sesión\n\n", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "Felicidades, ahora inicia sesión", Toast.LENGTH_SHORT).show();
         JSONArray jsonArray = response.optJSONArray("datos");
         JSONObject jsonObject = null;
         try {

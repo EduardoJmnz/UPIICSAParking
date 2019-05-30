@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void ingresar(View v){
-
        leerPreferences();
     }
 
@@ -55,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
             String user = sharedPreferences.getString("boleta", "N/A");
             String pass = sharedPreferences.getString("password", "N/a");
             if(user.equals(et1.getText().toString()) && pass.equals(et2.getText().toString())){
-                Intent intent = new Intent(getApplicationContext(), estacionamiento.class);
-                Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), Principal.class);
+                Toast.makeText(getApplicationContext(), "Bienvenido ", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }else{
                 Toast.makeText(getApplicationContext(), "Usuario y/o Contraseña incorrectos", Toast.LENGTH_SHORT).show();

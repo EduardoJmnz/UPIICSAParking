@@ -2,7 +2,7 @@ package com.example.eddyh.upiicsaparking;
 
 public class Users {
 
-    private String boleta, folio, nombre, ap_pat, modelo, color;
+    private String boleta, folio, nombre, ap_pat, modelo, color, placa;
 
     public String getBoleta() {
         return boleta;
@@ -50,5 +50,13 @@ public class Users {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getPlaca() {
+        return placa;
+    }
+
+    public void setPlaca(String placa) {
+        this.placa = placa;
     }
 }
