@@ -34,6 +34,7 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
     String URL = "https://upiicsapark.xyz/";
     RequestQueue rq;
     JsonRequest jr;
+    Context context;
     int validar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
         iniciarSesion();
     }
     public void iniciarSesion(){
-        SharedPreferences sharedPreferences  = getSharedPreferences("Login",getApplicationContext().MODE_PRIVATE);
+        SharedPreferences sharedPreferences  = getSharedPreferences("Login", context.MODE_PRIVATE);
         String boleta = sharedPreferences.getString("boleta", "No hay dato boleta");
         String sum = "generarQR.php?boleta="+boleta;
        String urlComp = URL + sum;
@@ -54,13 +55,11 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
     public void leerPreferences(){
         SharedPreferences sharedPreferences  = getSharedPreferences("Login",getApplicationContext().MODE_PRIVATE);
         String boleta = sharedPreferences.getString("boleta", "No hay dato boleta");
-        String nombre = sharedPreferences.getString("nombre", "Np hay dato nombre");
-        String apaterno = sharedPreferences.getString("ap_pat", "No hay dato apellido");
+        String nombre = sharedPreferences.getString("nombre", "No hay dato nombre");
         String modelo = sharedPreferences.getString("modelo", "No hay dato modelo");
         String color = sharedPreferences.getString("color", "No hay dato color");
-        String placa = sharedPreferences.getString("placa", "No hay dato placa");
+        String placa = sharedPreferences.getString("placas", "No hay dato placa");
 
-        generarQR(boleta, nombre, apaterno, modelo, color, placa);
 
     }
 
@@ -69,11 +68,12 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
         startActivity(intent);
     }
 
-    public void generarQR(String boleta, String nombre, String apaterno, String modelo, String color, String placa){
+    public void generarQR(){
+        user = new Users();
 
-        String codigo = boleta +"\n"+nombre+"\n"+apaterno+"\n"+modelo+"\n"+color+"\n"+placa;
+        String codigo = user.getBoleta() +"\n"+ user.getNombre()+"\n"+user.getModelo()+"\n"+user.getColor()+"\n"+user.getPlaca();
         //GENERAMOS EL QR CON LOS DATOS OBTENIDOS
-
+        image = (ImageView)findViewById(R.id.image);
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix = multiFormatWriter.encode(codigo, BarcodeFormat.QR_CODE, 200, 200);
@@ -84,58 +84,4 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
             e.printStackTrace();
         }
     }
-
-    @Override
-    public void onErrorResponse(VolleyError error) {
-        validar = 2;
-        Toast.makeText(this, "Tenemos un problema con la BD \n Inténtalo más tarde",Toast.LENGTH_SHORT ).show();
-    }
-
-    @Override
-    public void onResponse(JSONObject response) {
-
-        user = new Users();
-        validar = 1;
-        JSONArray jsonArray = response.optJSONArray("datos");
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = jsonArray.getJSONObject(0);
-            user.setModelo(jsonObject.optString("modelo"));
-            user.setPlaca(jsonObject.optString("placa"));
-            user.setColor(jsonObject.optString("color"));
-            user.setNombre(jsonObject.optString("nombre"));
-            user.setAp_pat(jsonObject.optString("apaterno"));
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        guardarPreferences();
-
-    }
-
-    public void guardarPreferences(){
-        String name, apaterno, modelo, placa, color;
-        user = new Users();
-
-        name = user.getNombre();
-        apaterno = user.getAp_pat();
-        modelo = user.getModelo();
-        placa = user.getPlaca();
-        color = user.getColor();
-
-        if(validar == 1){
-            Context context = getApplicationContext();
-            SharedPreferences sharedPreferences = getSharedPreferences("Login", getApplicationContext().MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("nombre", name);
-            editor.putString("ap_pat", apaterno);
-            editor.putString("modelo", modelo);
-            editor.putString("placa", placa);
-            editor.putString("color", color);
-            editor.commit();
-            leerPreferences();
-        }else if(validar == 2){
-            Toast.makeText(getApplicationContext(), "Algo ocurrió mal \nInténtalo más tarde", Toast.LENGTH_SHORT).show();
-        }
-    }
-}
+7
