@@ -27,7 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MostrarQr extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener  {
+public class MostrarQr extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     ImageView image;
     Users user;
@@ -36,6 +36,7 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
     JsonRequest jr;
     Context context;
     int validar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,17 +44,18 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
         rq = Volley.newRequestQueue(this);
         iniciarSesion();
     }
-    public void iniciarSesion(){
-        SharedPreferences sharedPreferences  = getSharedPreferences("Login", context.MODE_PRIVATE);
+
+    public void iniciarSesion() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Login", context.MODE_PRIVATE);
         String boleta = sharedPreferences.getString("boleta", "No hay dato boleta");
-        String sum = "generarQR.php?boleta="+boleta;
-       String urlComp = URL + sum;
-       jr = new JsonObjectRequest(Request.Method.GET, urlComp, null, this, this);
+        String sum = "generarQR.php?boleta=" + boleta;
+        String urlComp = URL + sum;
+        jr = new JsonObjectRequest(Request.Method.GET, urlComp, null, this, this);
         rq.add(jr);
     }
 
-    public void leerPreferences(){
-        SharedPreferences sharedPreferences  = getSharedPreferences("Login",getApplicationContext().MODE_PRIVATE);
+    public void leerPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("Login", getApplicationContext().MODE_PRIVATE);
         String boleta = sharedPreferences.getString("boleta", "No hay dato boleta");
         String nombre = sharedPreferences.getString("nombre", "No hay dato nombre");
         String modelo = sharedPreferences.getString("modelo", "No hay dato modelo");
@@ -64,16 +66,17 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
     }
 
     public void mostrarPark(View view) {
+
         Intent intent = new Intent(this, Principal.class);
         startActivity(intent);
     }
 
-    public void generarQR(){
+    public void generarQR() {
         user = new Users();
 
-        String codigo = user.getBoleta() +"\n"+ user.getNombre()+"\n"+user.getModelo()+"\n"+user.getColor()+"\n"+user.getPlaca();
+        String codigo = user.getBoleta() + "\n" + user.getNombre() + "\n" + user.getModelo() + "\n" + user.getColor() + "\n" + user.getPlaca()+"\n"+user.getFolio();
         //GENERAMOS EL QR CON LOS DATOS OBTENIDOS
-        image = (ImageView)findViewById(R.id.image);
+        image = (ImageView) findViewById(R.id.image);
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             BitMatrix bitMatrix = multiFormatWriter.encode(codigo, BarcodeFormat.QR_CODE, 200, 200);
@@ -84,4 +87,30 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
             e.printStackTrace();
         }
     }
-7
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        user = new Users();
+        JSONArray jsonArray = response.optJSONArray("datos");
+        JSONObject jsonObject =null;
+        try {
+            jsonObject = jsonArray.getJSONObject(0);
+            user.setBoleta(jsonObject.optString("boleta"));
+            user.setNombre(jsonObject.optString("nombre"));
+            user.setModelo(jsonObject.optString("modelo"));
+            user.setPlaca(jsonObject.optString("placas"));
+            user.setColor(jsonObject.optString("color"));
+            user.setFolio(jsonObject.optString("folio"));
+            generarQR();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+}

@@ -128,8 +128,7 @@ public class Registro extends AppCompatActivity implements Response.Listener<JSO
     public void onErrorResponse(VolleyError error) {
         validar = 2;
         Toast.makeText(this, "No eres beneficiario, lo lamentamos\nNo puedes usar la app", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     @Override

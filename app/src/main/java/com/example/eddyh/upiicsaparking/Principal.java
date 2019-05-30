@@ -41,5 +41,6 @@ public class Principal extends AppCompatActivity {
     public void mostrarQR(View view) {
         Intent intent = new Intent(this, MostrarQr.class);
         startActivity(intent);
+        disponibles.setText("Lugares disponibles : 29");
     }
 }
