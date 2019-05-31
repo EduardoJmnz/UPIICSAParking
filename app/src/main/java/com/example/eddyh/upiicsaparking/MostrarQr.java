@@ -72,8 +72,9 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
 
         SharedPreferences sharedPreferences = getSharedPreferences("Login", getApplicationContext().MODE_PRIVATE);
         String boleta = sharedPreferences.getString("boleta", "No hay dato boleta");
+        String folio = sharedPreferences.getString("folio", "N/Folio");
         String codigo = "Boleta: "+boleta+"\n"+"Nombre: "+nombre+"\n"+"Apellido: "+apellido+"\n"+
-                "Modelo: "+modelo+"\n"+"Placas: "+placas+"\n"+"Color: "+color;
+                "Modelo: "+modelo+"\n"+"Placas: "+placas+"\n"+"Color: "+color+"Folio: "+folio;
         //GENERAMOS EL QR CON LOS DATOS OBTENIDOS
         image = (ImageView) findViewById(R.id.image);
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
