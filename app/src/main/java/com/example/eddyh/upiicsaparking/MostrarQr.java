@@ -30,8 +30,7 @@ import org.json.JSONObject;
 public class MostrarQr extends AppCompatActivity implements Response.Listener<JSONObject>, Response.ErrorListener {
 
     ImageView image;
-    Users user;
-    String URL = "https://upiicsapark.xyz/";
+    String URL = "https://upiiparking.000webhostapp.com/";
     RequestQueue rq;
     JsonRequest jr;
     Context context;
@@ -46,6 +45,7 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
     }
 
     public void iniciarSesion() {
+    context = getApplicationContext();
         SharedPreferences sharedPreferences = getSharedPreferences("Login", context.MODE_PRIVATE);
         String boleta = sharedPreferences.getString("boleta", "No hay dato boleta");
         String sum = "generarQR.php?boleta=" + boleta;
@@ -61,20 +61,17 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
         String modelo = sharedPreferences.getString("modelo", "No hay dato modelo");
         String color = sharedPreferences.getString("color", "No hay dato color");
         String placa = sharedPreferences.getString("placas", "No hay dato placa");
-
-
     }
 
     public void mostrarPark(View view) {
-
         Intent intent = new Intent(this, Principal.class);
         startActivity(intent);
     }
 
-    public void generarQR() {
-        user = new Users();
+    public void generarQR(String nombre, String apellido, String modelo, String placas, String color) {
 
-        String codigo = user.getBoleta() + "\n" + user.getNombre() + "\n" + user.getModelo() + "\n" + user.getColor() + "\n" + user.getPlaca()+"\n"+user.getFolio();
+        String codigo = nombre+"\n"+apellido+"\n"+modelo+"\n"+placas+"\n"+color;
+
         //GENERAMOS EL QR CON LOS DATOS OBTENIDOS
         image = (ImageView) findViewById(R.id.image);
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
@@ -90,27 +87,39 @@ public class MostrarQr extends AppCompatActivity implements Response.Listener<JS
 
     @Override
     public void onErrorResponse(VolleyError error) {
-
+        Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onResponse(JSONObject response) {
-        user = new Users();
         JSONArray jsonArray = response.optJSONArray("datos");
-        JSONObject jsonObject =null;
-        try {
-            jsonObject = jsonArray.getJSONObject(0);
-            user.setBoleta(jsonObject.optString("boleta"));
-            user.setNombre(jsonObject.optString("nombre"));
-            user.setModelo(jsonObject.optString("modelo"));
-            user.setPlaca(jsonObject.optString("placas"));
-            user.setColor(jsonObject.optString("color"));
-            user.setFolio(jsonObject.optString("folio"));
-            generarQR();
+        String nombre = null, apellido= null, modelo=null, placas=null, color=null;
+        try{
+            for(int i = 0; i < jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                  nombre = jsonObject.getString("nombre");
+                  apellido = jsonObject.getString("ap_pat");
+                  modelo = jsonObject.getString("modelo");
+                  placas = jsonObject.getString("placas");
+                 color = jsonObject.getString("color");
+            }
+            guardarPreferences(nombre, apellido, modelo, placas, color);
+            generarQR(nombre, apellido, modelo, placas, color);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
+    private void guardarPreferences(String nombre, String apellido, String modelo, String placas, String color) {
+        Context context = getApplicationContext();
+        SharedPreferences sharedPreferences = getSharedPreferences("Login", context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("nombre", nombre);
+        editor.putString("apellido", apellido);
+        editor.putString("modelo", modelo);
+        editor.putString("placas", placas);
+        editor.putString("color", color);
+        editor.commit();
+    }
 
 }

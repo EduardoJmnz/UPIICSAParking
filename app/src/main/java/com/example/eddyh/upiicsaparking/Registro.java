@@ -45,7 +45,7 @@ public class Registro extends AppCompatActivity implements Response.Listener<JSO
     String contra;
     private int validar;
     String contra2;
-    String URL = "https://upiicsapark.xyz/";
+    String URL = "https://upiiparking.000webhostapp.com/";
 
 
     @Override
